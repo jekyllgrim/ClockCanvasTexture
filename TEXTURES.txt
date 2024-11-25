@@ -1,2 +1,0 @@
-Texture ClokFace, 64, 64
-{}

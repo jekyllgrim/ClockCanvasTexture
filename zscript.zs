@@ -1,4 +1,21 @@
-version "4.11"
+version "4.12"
+
+class GrandfatherClock : Actor
+{
+	Default
+	{
+		+SOLID
+		+DECOUPLEDANIMATIONS
+		height 80;
+		radius 10;
+	}
+
+	States {
+	Spawn:
+		BAL1 A -1 NoDelay SetAnimation('swing', 10, flags:SAF_LOOP);
+		stop;
+	}
+}
 
 class ClockHandler : EventHandler
 {
@@ -35,14 +52,14 @@ class ClockHandler : EventHandler
 	{
 		// The name/path to the texture used as the background
 		// for the clock:
-		clockface_texture_name = "graphics/clock_face.png";
+		clockface_texture_name = "models/clockface.png";
 		// The color of the hands (black by default):
 		clockface_handsColor = 0x000000;
 		// The name of the CANVASTEXTURE defined in ANIMDEFS.
-		// By default it's "ClockFace" and it's 256x256. It can
+		// By default it's "ClockFace_Canvas" and it's 256x256. It can
 		// be scaled in Ultimate Doom Builder to apply it to
 		// a smaller linedef:
-		String canvasName = "ClockFace";
+		String canvasName = "ClockFace_Canvas";
 
 		// This normally doesn't need to be touched.
 		// Sets up the canvas and necessary values:
@@ -154,9 +171,9 @@ class ClockHandler : EventHandler
 		// Move hours. Note that it doesn't move in 12-step increments, but moves
 		// gradually towards the next hour:
 		UpdateHandShape(clockHands_Hour, clockcenter, (CLOCKANG_360 / 12) * hours + (CLOCKANG_360 / 12 / 60) * minutes);
-		// Move minutes. It also moves gradually towards the next minute:
-		UpdateHandShape(clockHands_Minute, clockcenter, (CLOCKANG_360 / 60) * minutes + (CLOCKANG_360 / 60 / 60) * seconds);
-		// Move seconds. This one moves in 60-step increments, not smoothly:
+		// Move minutes (60 increments):
+		UpdateHandShape(clockHands_Minute, clockcenter, (CLOCKANG_360 / 60) * minutes);
+		// Move seconds (60 increments):
 		UpdateHandShape(clockHands_Second, clockcenter, (CLOCKANG_360 / 60) * seconds);
 
 		//Console.PrintF("Drawing clock shapes %d %d %d", hours, minutes, seconds);

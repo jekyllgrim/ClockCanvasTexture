@@ -1,0 +1,7 @@
+Model GrandfatherClock
+{
+	Path "models"
+	Model 0 "clock.iqm"
+	Scale 10 10 10
+	BaseFrame
+}
